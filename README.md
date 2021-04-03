@@ -181,18 +181,18 @@ Docker compose will take a 3-5 minutes to start, depending on your hardware. Ple
 
 Once docker-compose is ready, the following services will be available:
 
-| Service | Host URL | Docker URL | Username | Password |
-| --- | --- | --- | --- | --- |
+| Service | Host URL | Docker URL |
+| --- | --- | --- |
 | Public Transit Status | [http://localhost:8888](http://localhost:8888) | n/a | ||
 | Landoop Kafka Connect UI | [http://localhost:8084](http://localhost:8084) | http://connect-ui:8084 |
 | Landoop Kafka Topics UI | [http://localhost:8085](http://localhost:8085) | http://topics-ui:8085 |
 | Landoop Schema Registry UI | [http://localhost:8086](http://localhost:8086) | http://schema-registry-ui:8086 |
-| Kafka | PLAINTEXT://localhost:9092,PLAINTEXT://localhost:9093,PLAINTEXT://localhost:9094 | PLAINTEXT://kafka0:9092,PLAINTEXT://kafka1:9093,PLAINTEXT://kafka2:9094 |
+| Kafka | PLAINTEXT://localhost:9092 <br> PLAINTEXT://localhost:9093 <br> PLAINTEXT://localhost:9094 | PLAINTEXT://kafka0:9092 <br> PLAINTEXT://kafka1:9093 <br> PLAINTEXT://kafka2:9094 |
 | REST Proxy | [http://localhost:8082](http://localhost:8082/) | http://rest-proxy:8082/ |
 | Schema Registry | [http://localhost:8081](http://localhost:8081/ ) | http://schema-registry:8081/ |
 | Kafka Connect | [http://localhost:8083](http://localhost:8083) | http://kafka-connect:8083 |
 | KSQL | [http://localhost:8088](http://localhost:8088) | http://ksql:8088 |
-| PostgreSQL | `jdbc:postgresql://localhost:5432/cta` | `jdbc:postgresql://postgres:5432/cta` | `cta_admin` | `chicago` |
+| PostgreSQL | `jdbc:postgresql://localhost:5432/cta` | `jdbc:postgresql://postgres:5432/cta` <br> (username: `cta_admin`, password: `chicago`) |
 
 Note that to access these services from your own machine, you will always use the `Host URL` column.
 
