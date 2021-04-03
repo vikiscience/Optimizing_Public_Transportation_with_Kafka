@@ -15,6 +15,14 @@ The following are required to complete this project:
 * Python 3.7
 * Access to a computer with a minimum of 16gb+ RAM and a 4-core CPU to execute the simulation
 
+## Install project requirements
+
+```bash
+conda create -n streaming python=3.7
+conda activate streaming
+pip install -r requirements_all.txt
+```
+
 ## Description
 
 The Chicago Transit Authority (CTA) has asked us to develop a dashboard displaying system status for its commuters. We have decided to use Kafka and ecosystem tools like REST Proxy and Kafka Connect to accomplish this task.
@@ -199,35 +207,23 @@ However, when you are ready to verify the end-to-end system prior to submission,
 #### To run the `producer`:
 
 1. `cd producers`
-2. `virtualenv venv`
-3. `. venv/bin/activate`
-4. `pip install -r requirements.txt`
-5. `python simulation.py`
+2. `python simulation.py`
 
 Once the simulation is running, you may hit `Ctrl+C` at any time to exit.
 
 #### To run the Faust Stream Processing Application:
 1. `cd consumers`
-2. `virtualenv venv`
-3. `. venv/bin/activate`
-4. `pip install -r requirements.txt`
-5. `faust -A faust_stream worker -l info`
+2. `faust -A faust_stream worker -l info`
 
 
 #### To run the KSQL Creation Script:
 1. `cd consumers`
-2. `virtualenv venv`
-3. `. venv/bin/activate`
-4. `pip install -r requirements.txt`
-5. `python ksql.py`
+2. `python ksql.py`
 
 #### To run the `consumer`:
 
 ** NOTE **: Do not run the consumer until you have reached Step 6!
 1. `cd consumers`
-2. `virtualenv venv`
-3. `. venv/bin/activate`
-4. `pip install -r requirements.txt`
-5. `python server.py`
+2. `python server.py`
 
 Once the server is running, you may hit `Ctrl+C` at any time to exit.
