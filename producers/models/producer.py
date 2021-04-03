@@ -1,4 +1,4 @@
-"""Producer base-class providing common utilites and functionality"""
+"""Producer base-class providing common utilities and functionality"""
 import logging
 import time
 
@@ -63,6 +63,7 @@ class Producer:
         logger.info("topic creation kafka integration incomplete - skipping")
 
     def time_millis(self):
+        """Use this function to get the key for Kafka Events"""
         return int(round(time.time() * 1000))
 
     def close(self):
@@ -73,7 +74,3 @@ class Producer:
         #
         #
         logger.info("producer close incomplete - skipping")
-
-    def time_millis(self):
-        """Use this function to get the key for Kafka Events"""
-        return int(round(time.time() * 1000))
