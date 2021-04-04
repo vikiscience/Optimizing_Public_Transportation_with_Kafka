@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 KAFKA_CONNECT_URL_FULL = config.KAFKA_CONNECT_URL + "/connectors"
-CONNECTOR_NAME = "stations"
+CONNECTOR_NAME = "jdbc_source_stations"
 
 
 def configure_connector():
@@ -45,7 +45,7 @@ def configure_connector():
                 "table.whitelist": "stations",
                 "mode": "incrementing",
                 "incrementing.column.name": "stop_id",
-                "topic.prefix": "com.udacity",
+                "topic.prefix": "com.udacity.",
                 "poll.interval.ms": "3600000",  # = 1 hour
             }
         }),
