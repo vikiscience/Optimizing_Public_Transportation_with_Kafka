@@ -6,3 +6,7 @@ SCHEMA_REGISTRY_URL = 'http://localhost:8081'
 REST_PROXY_URL = 'http://localhost:8082'  # 'http://rest-proxy:8082'
 KAFKA_CONNECT_URL = "http://localhost:8083"
 KSQL_URL = "http://localhost:8088"
+
+# topic names
+TOPIC_NAME_TURNSTILE = 'com.udacity.turnstile'
+TOPIC_NAME_TURNSTILE_SUMMARY = 'com.udacity.turnstile_summary'
