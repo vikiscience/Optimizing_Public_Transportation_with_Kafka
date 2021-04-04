@@ -43,10 +43,15 @@ def configure_connector():
                 "connection.user": config.DB_USER,
                 "connection.password": config.DB_PW,
                 "table.whitelist": "stations",
-                "mode": "incrementing",
+                "mode": "incrementing",  # "bulk",
                 "incrementing.column.name": "stop_id",
                 "topic.prefix": "com.udacity.",
                 "poll.interval.ms": "3600000",  # = 1 hour
+                "transforms": "createKey,extractInt",
+                "transforms.createKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+                "transforms.createKey.fields": "station_id",
+                "transforms.extractInt.type": "org.apache.kafka.connect.transforms.ExtractField$Key",
+                "transforms.extractInt.field": "station_id"
             }
         }),
     )
