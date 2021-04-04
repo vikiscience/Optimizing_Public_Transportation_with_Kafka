@@ -15,11 +15,11 @@ CONNECTOR_NAME = "stations"
 
 def configure_connector():
     """Starts and configures the Kafka Connect connector"""
-    logging.debug("creating or updating kafka connect connector...")
+    logger.info("Creating or updating kafka connect connector...")
 
     resp = requests.get(f"{KAFKA_CONNECT_URL_FULL}/{CONNECTOR_NAME}")
     if resp.status_code == 200:
-        logging.debug("connector already created skipping recreation")
+        logger.info("Connector already created skipping recreation")
         return
 
     # Directions: Use the JDBC Source Connector to connect to Postgres. Load the `stations` table
@@ -53,7 +53,7 @@ def configure_connector():
 
     # Ensure a healthy response was given
     resp.raise_for_status()
-    logging.debug("connector created successfully")
+    logger.info("Connector created successfully")
 
 
 if __name__ == "__main__":

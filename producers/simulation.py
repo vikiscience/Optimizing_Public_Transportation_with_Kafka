@@ -5,13 +5,13 @@ import datetime
 import time
 from enum import IntEnum
 import logging
-import logging.config
+from logging import config as logging_config
 from pathlib import Path
 
 import pandas as pd
 
 # Import logging before models to ensure configuration is picked up
-logging.config.fileConfig(f"{Path(__file__).parents[0]}/logging.ini")
+logging_config.fileConfig(f"{Path(__file__).parents[0]}/logging.ini")
 
 from producers.connector import configure_connector
 from producers.models import Line, Weather
@@ -60,14 +60,14 @@ class TimeSimulation:
             hour=0, minute=0, second=0, microsecond=0
         )
         logger.info("Beginning simulation, press Ctrl+C to exit at any time")
-        logger.info("loading kafka connect jdbc source connector")
+        logger.info("Loading kafka connect jdbc source connector")
         configure_connector()
 
-        logger.info("beginning cta train simulation")
+        logger.info("Beginning cta train simulation")
         weather = Weather(curr_time.month)
         try:
             while True:
-                logger.debug("simulation running: %s", curr_time.isoformat())
+                logger.debug("Simulation running: %s", curr_time.isoformat())
                 # Send weather on the top of the hour
                 if curr_time.minute == 0:
                     weather.run(curr_time.month)
