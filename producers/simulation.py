@@ -13,8 +13,8 @@ import pandas as pd
 # Import logging before models to ensure configuration is picked up
 logging.config.fileConfig(f"{Path(__file__).parents[0]}/logging.ini")
 
-from connector import configure_connector
-from models import Line, Weather
+from producers.connector import configure_connector
+from producers.models import Line, Weather
 
 
 logger = logging.getLogger(__name__)
