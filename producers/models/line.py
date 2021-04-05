@@ -53,7 +53,7 @@ class Line:
         for train_id in range(self.num_trains):
             tid = str(train_id).zfill(3)
             train = Train(
-                f"{self.color.name[0].upper()}L{tid}", Train.status.in_service
+                f"{self.color.name[0].upper()}L{tid}", Train.states.in_service
             )
             trains.append(train)
 
