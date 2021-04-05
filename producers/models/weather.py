@@ -32,7 +32,7 @@ class Weather(Producer):
     summer_months = set((6, 7, 8))
 
     def __init__(self, month):
-        topic_name = "com.udacity.weather"
+        topic_name = config.TOPIC_NAME_WEATHER
         super().__init__(
             topic_name,
             key_schema=Weather.key_schema,

@@ -4,6 +4,7 @@ from pathlib import Path
 
 from confluent_kafka import avro
 
+import config
 from producers.models.producer import Producer
 from producers.models.turnstile_hardware import TurnstileHardware
 
@@ -27,7 +28,7 @@ class Turnstile(Producer):
             .replace("'", "")
         )
 
-        topic_name = "com.udacity.turnstile"
+        topic_name = config.TOPIC_NAME_TURNSTILE
         super().__init__(
             topic_name,
             key_schema=Turnstile.key_schema,

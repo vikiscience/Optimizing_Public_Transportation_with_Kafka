@@ -4,6 +4,7 @@ from pathlib import Path
 
 from confluent_kafka import avro
 
+import config
 from producers.models import Turnstile
 from producers.models.producer import Producer
 
@@ -27,7 +28,7 @@ class Station(Producer):
             .replace("'", "")
         )
 
-        topic_name = "com.udacity.arrival"
+        topic_name = config.TOPIC_NAME_ARRIVAL
         super().__init__(
             topic_name,
             key_schema=Station.key_schema,

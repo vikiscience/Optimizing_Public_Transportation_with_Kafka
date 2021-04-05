@@ -11,6 +11,11 @@ logger = logging.getLogger(__name__)
 
 KAFKA_CONNECT_URL_FULL = config.KAFKA_CONNECT_URL + "/connectors"
 CONNECTOR_NAME = "jdbc_source_stations"
+TOPIC_NAME = config.TOPIC_NAME_STATIONS
+TOPIC_NAME_SHORT = TOPIC_NAME.split('.')[-1]
+TOPIC_NAME_PREFIX = TOPIC_NAME[:TOPIC_NAME.index(TOPIC_NAME_SHORT)]
+
+assert TOPIC_NAME_SHORT == 'stations', 'Topic should be called as the DB table!'
 
 
 def configure_connector():
@@ -42,10 +47,10 @@ def configure_connector():
                 "connection.url": config.DB_URL,
                 "connection.user": config.DB_USER,
                 "connection.password": config.DB_PW,
-                "table.whitelist": "stations",
+                "table.whitelist": TOPIC_NAME_SHORT,
                 "mode": "incrementing",  # "bulk",
                 "incrementing.column.name": "stop_id",
-                "topic.prefix": "com.udacity.",
+                "topic.prefix": TOPIC_NAME_PREFIX,
                 "poll.interval.ms": "3600000",  # = 1 hour
                 "transforms": "createKey,extractInt",
                 "transforms.createKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
