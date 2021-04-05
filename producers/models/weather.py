@@ -69,7 +69,7 @@ class Weather(Producer):
                     'value_schema': str(Weather.value_schema),
                     'records': [
                         {'key': {'timestamp': self.time_millis()},
-                         'value': {'temperature': self.temp, 'status': self.status}}
+                         'value': {'temperature': self.temp, 'status': self.status.name}}
                     ]
                 }
             ),
