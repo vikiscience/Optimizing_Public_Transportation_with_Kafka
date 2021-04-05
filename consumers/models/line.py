@@ -2,7 +2,8 @@
 import json
 import logging
 
-from models import Station
+import config
+from consumers.models import Station
 
 
 logger = logging.getLogger(__name__)
@@ -28,6 +29,7 @@ class Line:
         if value["line"] != self.color:
             return
         self.stations[value["station_id"]] = Station.from_message(value)
+        logger.debug('Line: %s, stations found: %s', self.color, len(self.stations))
 
     def _handle_arrival(self, message):
         """Updates train locations"""
@@ -39,41 +41,36 @@ class Line:
             if prev_station is not None:
                 prev_station.handle_departure(prev_dir)
             else:
-                logger.debug("unable to handle previous station due to missing station")
+                logger.debug("Unable to handle previous station due to missing station")
         else:
-            logger.debug(
-                "unable to handle previous station due to missing previous info"
-            )
+            logger.debug("Unable to handle previous station due to missing previous info")
 
         station_id = value.get("station_id")
         station = self.stations.get(station_id)
         if station is None:
-            logger.debug("unable to handle message due to missing station")
+            logger.debug("Unable to handle current station due to missing station")
             return
         station.handle_arrival(
             value.get("direction"), value.get("train_id"), value.get("train_status")
         )
 
     def process_message(self, message):
-        """Given a kafka message, extract data"""
-        # TODO: Based on the message topic, call the appropriate handler.
-        if True: # Set the conditional correctly to the stations Faust Table
+        """Given a kafka message, extract data based on its topic"""
+        if message.topic() == config.TOPIC_NAME_TRANS_STATIONS:
             try:
                 value = json.loads(message.value())
-                self._handle_station(value)
+                self._handle_station(value)  # only here is a new station appended
             except Exception as e:
-                logger.fatal("bad station? %s, %s", value, e)
-        elif True: # Set the conditional to the arrival topic
+                logger.fatal("Bad station? %s, %s", value, e)
+        elif message.topic() == config.TOPIC_NAME_ARRIVAL:
             self._handle_arrival(message)
-        elif True: # Set the conditional to the KSQL Turnstile Summary Topic
+        elif message.topic() == config.TOPIC_NAME_TURNSTILE_SUMMARY:
             json_data = json.loads(message.value())
             station_id = json_data.get("STATION_ID")
             station = self.stations.get(station_id)
             if station is None:
-                logger.debug("unable to handle message due to missing station")
+                logger.debug("Unable to handle message due to missing station (turnstile summary)")
                 return
             station.process_message(json_data)
         else:
-            logger.debug(
-                "unable to find handler for message from topic %s", message.topic
-            )
+            logger.info("Unable to find handler for message from topic %s", message.topic())

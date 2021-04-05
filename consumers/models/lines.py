@@ -2,7 +2,8 @@
 import json
 import logging
 
-from models import Line
+import config
+from consumers.models import Line
 
 
 logger = logging.getLogger(__name__)
@@ -19,9 +20,9 @@ class Lines:
 
     def process_message(self, message):
         """Processes a station message"""
-        if "org.chicago.cta.station" in message.topic():
+        if message.topic() == config.TOPIC_NAME_TRANS_STATIONS or message.topic() == config.TOPIC_NAME_ARRIVAL:
             value = message.value()
-            if message.topic() == "org.chicago.cta.stations.table.v1":
+            if message.topic() == config.TOPIC_NAME_TRANS_STATIONS:
                 value = json.loads(value)
             if value["line"] == "green":
                 self.green_line.process_message(message)
@@ -30,10 +31,10 @@ class Lines:
             elif value["line"] == "blue":
                 self.blue_line.process_message(message)
             else:
-                logger.debug("discarding unknown line msg %s", value["line"])
-        elif "TURNSTILE_SUMMARY" == message.topic():
+                logger.debug("Discarding unknown line %s, msg %s", value["line"], value)
+        elif message.topic() == config.TOPIC_NAME_TURNSTILE_SUMMARY:
             self.green_line.process_message(message)
             self.red_line.process_message(message)
             self.blue_line.process_message(message)
         else:
-            logger.info("ignoring non-lines message %s", message.topic())
+            logger.info("Ignoring non-lines message %s", message.topic())
