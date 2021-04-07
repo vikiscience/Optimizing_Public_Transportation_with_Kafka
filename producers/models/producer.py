@@ -36,7 +36,8 @@ class Producer:
 
         self.broker_properties = {
             'bootstrap.servers': config.BROKER_URL,
-            'client.id': socket.gethostname(),
+            'group.id': 'producer-group-' + socket.gethostname(),
+            'client.id': 'producer-' + self.topic_name,
             'compression.type': "none",
             'enable.idempotence': "true",
             'schema.registry.url': config.SCHEMA_REGISTRY_URL
