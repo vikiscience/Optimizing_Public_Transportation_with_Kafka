@@ -40,6 +40,7 @@ class KafkaConsumer:
             'client.id': 'consumer-' + socket.gethostname(),
             'compression.type': "none",
             'enable.idempotence': "true",
+            'auto.offset.reset': "earliest" if self.offset_earliest else "latest",
             # 'max.poll.interval.ms': '3600000'  # todo 1 hour?
         }
 
