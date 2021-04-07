@@ -65,6 +65,6 @@ class Producer:
 
     def close(self):
         """Prepares the producer for exit by cleaning up the producer"""
-        # self.client.delete_topics(list(Producer.existing_topics))  # todo delete weather topic
+        # self.client.delete_topics(list(Producer.existing_topics))  # (optional) delete the created topics on shutdown
         self.producer.flush(timeout=1)
         logger.info("Producer close complete")
